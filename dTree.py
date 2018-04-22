@@ -11,7 +11,7 @@ import numpy as np
 
 # Max depth for decision tree
 MAX_DEPTH = 8
-MIN_SAMPLES_SPLIT=10
+MIN_SAMPLES_SPLIT = 10
 
 # All column names for data set
 col_names = ['id', 'age', 'job', 'marital', 'education',
@@ -89,8 +89,12 @@ predictions = decTreeModel.predict(query)
 
 # Create output to write to file
 output = ""
-for i in range(len(queryDataFrame.index)):
-    output += (queryDataFrame.index[i] + ",\"" + predictions[i] + "\"\n")
+dataFrameLne = len(queryDataFrame.index)
+for i in range(dataFrameLne):
+    output += (queryDataFrame.index[i] + ",\"" + predictions[i] + "\"")
+    if i < dataFrameLne - 1:
+        output += "\n"
+
 
 # Write to file
 text_file = open("data/predictions.txt", "w")
@@ -132,7 +136,7 @@ print("------------------------")
 print("Cross-validation Results")
 print("------------------------")
 
-# Run a 10 fold cross validation on this model using the full census data
+# Run a 10 fold cross validation on this model using
 scores=cross_validation.cross_val_score(decTreeModel, instances_train, target_train, cv=10)
 
 # The cross validaton function returns an accuracy score for each fold
